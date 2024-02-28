@@ -20,19 +20,56 @@ import {
 import FormInput from "@/components/form/form-input";
 import { useEffect, useState } from "react";
 import AddForm from "@/components/add-form/add-form";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { XCircle } from "lucide-react";
 
 export default function Home() {
   const [n, setN] = useState(3);
+  const [formInputArray, setFormInputArray] = useState<any[]>([]);
+  // let formInputArray: any = [];
 
-  let formInputArray: any = [];
+  useEffect(() => {
+    const initialFormInputs = [];
+    for (let i = 1; i <= 2; i++) {
+      initialFormInputs.push(
+        <FormInput n={n} label={i} key={i} handleDelete={handleDelete} />
+      );
+    }
+    setFormInputArray(initialFormInputs);
+  }, []);
 
   const handleAdd = () => {
+    const newFormInput = (
+      <FormInput n={n} label={n} key={n} handleDelete={handleDelete} />
+    );
+    setFormInputArray([...formInputArray, newFormInput]);
     setN(n + 1);
   };
 
-  for (let i = 1; i < n; i++) {
-    formInputArray.push(<FormInput n={n} label={i} key={i} />);
-  }
+  const handleDelete = (label: number) => {
+    const updatedArray = formInputArray.filter((item: any) => {
+      const parsedNumber = parseInt(item.key);
+      return parsedNumber !== label;
+    });
+    setFormInputArray(updatedArray);
+    setN(n - 1);
+  };
+
+  // for (let i = 1; i < n; i++) {
+  //   formInputArray.push(
+  //     <FormInput handleDelete={handleDelete} n={n} label={i} key={i} />
+  //   );
+  // }
 
   return (
     <div className="h-auto w-full bg-[#f6f7fb] pt-[60px] pb-[50px]">
@@ -93,11 +130,60 @@ export default function Home() {
           <div className="flex items-center justi gap-5">
             <TooltipProvider>
               <Tooltip delayDuration={50}>
-                <TooltipTrigger asChild>
-                  <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
-                    <Settings />
-                  </div>
-                </TooltipTrigger>
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    <TooltipTrigger asChild>
+                      <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
+                        <Settings />
+                      </div>
+                    </TooltipTrigger>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className=" ">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="h-[105px] w-full bg-[#4255ff] ">
+                        <div className="w-auto h-full flex items-center justify-between mx-[30px]">
+                          <div className="text-white text-[30px]">Tùy chọn</div>
+                          <AlertDialogCancel className="bg-transparent outline-none border-none hover:bg-transparent ">
+                            <XCircle className="w-8 h-8 text-white" />
+                          </AlertDialogCancel>
+                        </div>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="w-full">
+                        <div className="w-[100%] flex flex-col items-center justify-center mx-[30px] my-[35px]">
+                          <div className="w-full flex items-center justify-center">
+                            <div className="w-[50%] flex flex-col items-start justify-start gap-[10px]">
+                              <p className="uppercase text-[#38415e] text-[12px] font-[600]">hiển thị với</p>
+                              <select
+                                className="w-[185px] h-[40px] text-[#43d0d0] border-2 rounded-sm px-[10px]"
+                                name=""
+                                id=""
+                              >
+                                <option>Mọi người</option>
+                                <option>Chỉ tôi</option>
+                              </select>
+                              <p className="text-[#979fb7] font-[600] w-[80%]">Mọi người dùng Quizlet có thể sử dụng học phần này</p>
+                            </div>
+                            <div className="w-[50%] flex flex-col items-start justify-start gap-[10px]">
+                              <p className="uppercase text-[#38415e] text-[12px] font-[600]">AI CÓ THỂ SỬA</p>
+                              <select
+                                className="w-[185px] h-[40px] text-[#43d0d0] border-2 rounded-sm px-[10px]"
+                                name=""
+                                id=""
+                              >
+                                <option>Chỉ tôi</option>
+                                <option>Mọi người</option>
+                              </select>
+                              <p className="text-[#979fb7] font-[600] w-[80%]">Chỉ có bạn mới chỉnh sửa được học phần này</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-center w-[100%] mt-[30px] mb-[30px]">
+                            <Button className="w-[80%] h-[70px] mr-[60px] bg-[#3ccfcf] text-white hover:bg-[#3ccfcf] text-[20px] font-[600]">Lưu</Button>
+                          </div>
+                        </div>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                  </AlertDialogContent>
+                </AlertDialog>
                 <TooltipContent
                   side="bottom"
                   align="end"
@@ -143,7 +229,8 @@ export default function Home() {
             </TooltipProvider>
           </div>
         </div>
-        <div>{formInputArray}</div>
+        {/* <div>{formInputArray}</div> */}
+        {formInputArray.map((formInput) => formInput)}
         <AddForm handleAdd={handleAdd} />
         <div className="flex items-center justify-end mt-[20px]">
           <Button className="text-white text-[16px] w-[125px] h-[60px] bg-[#4255ff] hover:bg-[#4255ffe8]">

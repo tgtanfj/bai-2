@@ -20,11 +20,16 @@ import { Button } from "../ui/button";
 interface FormInputProps {
   label: number;
   n: number;
+  handleDelete: (label: number) => void;
 }
 
-const FormInput = ({ label, n }: FormInputProps) => {
+const FormInput = ({ label, n, handleDelete }: FormInputProps) => {
   const [isDivVisible, setDivVisible] = useState(false);
   const [isUploadImage, setIsUploadImage] = useState(false);
+
+  const onDelete = () => {
+    handleDelete(label);
+  };
 
   const handleFocus = () => {
     setDivVisible(true);
@@ -48,10 +53,13 @@ const FormInput = ({ label, n }: FormInputProps) => {
             <TooltipProvider>
               <Tooltip delayDuration={50}>
                 <TooltipTrigger asChild>
-                  {n <= 3 ? (
+                  {n <= 2 ? (
                     <Trash className="text-[#e9ebf1] w-4 h-4 cursor-default" />
                   ) : (
-                    <Trash className="text-[#414a65] w-4 h-4 cursor-pointer" />
+                    <Trash
+                      onClick={onDelete}
+                      className="text-[#414a65] w-4 h-4 cursor-pointer"
+                    />
                   )}
                 </TooltipTrigger>
                 <TooltipContent
@@ -137,9 +145,11 @@ const FormInput = ({ label, n }: FormInputProps) => {
               <Label className="text-[#a7a0b5] uppercase text-[12px] mt-[10px]">
                 Thuật ngữ
               </Label>
-              <Label className="text-[#40d2dd] uppercase text-[12px] mt-[10px]">
-                Chọn ngôn ngữ
-              </Label>
+              {isDivVisible && (
+                <Label className="text-[#40d2dd] uppercase text-[12px] mt-[10px]">
+                  Chọn ngôn ngữ
+                </Label>
+              )}
             </div>
           </div>
           <div className=" w-[50%] flex items-start justify-center mr-[20px] gap-5">
@@ -153,6 +163,11 @@ const FormInput = ({ label, n }: FormInputProps) => {
                 <Label className="text-[#a7a0b5] uppercase text-[12px] mt-[10px]">
                   Định nghĩa
                 </Label>
+                {isDivVisible && (
+                <Label className="text-[#40d2dd] uppercase text-[12px] mt-[10px]">
+                  Chọn ngôn ngữ
+                </Label>
+              )}
               </div>
             </div>
             <div className="w-[20%] flex items-center justify-center cursor-pointer">

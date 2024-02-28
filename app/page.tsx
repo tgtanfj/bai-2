@@ -1,113 +1,156 @@
-import Image from "next/image";
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { AlertCircle } from "lucide-react";
+import { Plus } from "lucide-react";
+import { Lock } from "lucide-react";
+import { NotepadText } from "lucide-react";
+import { Settings } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
+import { Keyboard } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import FormInput from "@/components/form/form-input";
+import { useEffect, useState } from "react";
+import AddForm from "@/components/add-form/add-form";
 
 export default function Home() {
+  const [n, setN] = useState(3);
+
+  let formInputArray: any = [];
+
+  const handleAdd = () => {
+    setN(n + 1);
+  };
+
+  for (let i = 1; i < n; i++) {
+    formInputArray.push(<FormInput n={n} label={i} key={i} />);
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="h-auto w-full bg-[#f6f7fb] pt-[60px] pb-[50px]">
+      <div className="mx-[160px] ">
+        <div className="flex items-center justify-between mb-[80px]">
+          <Label className="text-[20px] font-[600]">Tạo học phần mới</Label>
+          <Button className="text-white cursor-default" variant="secondary">
+            Tạo
+          </Button>
+        </div>
+        <Input
+          className="h-[50px]"
+          placeholder="Nhập tiêu đề, ví dụ:  Sinh Học - Chương 22: Tiến hóa"
+        />
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 md:gap-10 lg:gap-10 mt-[24px]">
+          <Textarea
+            className="resize-none"
+            placeholder="Thêm mô tả..."
+            rows={5}
+          />
+          <div className="flex flex-col justify-between relative">
+            <Input className="h-[50px]" placeholder="Tên trường" />
+            <AlertCircle className="absolute top-[85px] right-[20px] w-5 h-5 text-[#586380]" />
+            <Input className="h-[50px]" placeholder="Khóa học" disabled />
+            <AlertCircle className="absolute top-[15px] right-[20px] w-5 h-5 text-[#586380]" />
+          </div>
+        </div>
+        <div className="flex items-center justify-between mt-[50px] mb-[60px]">
+          <div className="flex items-center justi gap-5">
+            <Button variant="outline" className="text-[#65728f]">
+              <Plus className="w-4 h-4 mr-2 " /> Nhập
+            </Button>
+            <Button variant="outline">
+              <Plus className="w-4 h-4 mr-2 text-[#65728f]" />{" "}
+              <p className="text-[#65728f]">Thêm sơ đồ</p>{" "}
+              <TooltipProvider>
+                <Tooltip delayDuration={50}>
+                  <TooltipTrigger asChild>
+                    <div className="w-8 h-5 bg-[#ffcd1f] flex items-center justify-center rounded-2xl ml-2">
+                      <Lock className="w-4 h-4 text-center text-black" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="bottom"
+                    align="center"
+                    sideOffset={10}
+                    className="bg-black text-white "
+                  >
+                    <p>Mở khóa tính năng này với Quizlet Plus</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </Button>
+            <Button className="text-[#65728f]" variant="outline">
+              <NotepadText className="w-4 h-4 mr-2" /> Tạo từ ghi chú
+            </Button>
+          </div>
+          <div className="flex items-center justi gap-5">
+            <TooltipProvider>
+              <Tooltip delayDuration={50}>
+                <TooltipTrigger asChild>
+                  <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
+                    <Settings />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  align="end"
+                  className="bg-black text-white"
+                >
+                  <p>Quản lý quyền truy cập</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip delayDuration={50}>
+                <TooltipTrigger asChild>
+                  <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
+                    <ArrowLeftRight />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  align="end"
+                  className="bg-black text-white"
+                >
+                  <p>Lật lại thuật ngữ và định nghĩa</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip delayDuration={50}>
+                <TooltipTrigger asChild>
+                  <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
+                    <Keyboard />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  align="end"
+                  className="bg-black text-white"
+                >
+                  <p>Phím tắt bàn phím</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
+        <div>{formInputArray}</div>
+        <AddForm handleAdd={handleAdd} />
+        <div className="flex items-center justify-end mt-[20px]">
+          <Button className="text-white text-[16px] w-[125px] h-[60px] bg-[#4255ff] hover:bg-[#4255ffe8]">
+            Tạo
+          </Button>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }

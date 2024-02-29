@@ -22,21 +22,25 @@ import { useEffect, useState } from "react";
 import AddForm from "@/components/add-form/add-form";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { XCircle } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { MoveUp } from "lucide-react";
+import { MoveDown } from "lucide-react";
 
 export default function Home() {
   const [n, setN] = useState(3);
   const [formInputArray, setFormInputArray] = useState<any[]>([]);
-  // let formInputArray: any = [];
 
   useEffect(() => {
     const initialFormInputs = [];
@@ -152,7 +156,9 @@ export default function Home() {
                         <div className="w-[100%] flex flex-col items-center justify-center mx-[30px] my-[35px]">
                           <div className="w-full flex items-center justify-center">
                             <div className="w-[50%] flex flex-col items-start justify-start gap-[10px]">
-                              <p className="uppercase text-[#38415e] text-[12px] font-[600]">hiển thị với</p>
+                              <p className="uppercase text-[#38415e] text-[12px] font-[600]">
+                                hiển thị với
+                              </p>
                               <select
                                 className="w-[185px] h-[40px] text-[#43d0d0] border-2 rounded-sm px-[10px]"
                                 name=""
@@ -161,10 +167,15 @@ export default function Home() {
                                 <option>Mọi người</option>
                                 <option>Chỉ tôi</option>
                               </select>
-                              <p className="text-[#979fb7] font-[600] w-[80%]">Mọi người dùng Quizlet có thể sử dụng học phần này</p>
+                              <p className="text-[#979fb7] font-[600] w-[80%]">
+                                Mọi người dùng Quizlet có thể sử dụng học phần
+                                này
+                              </p>
                             </div>
                             <div className="w-[50%] flex flex-col items-start justify-start gap-[10px]">
-                              <p className="uppercase text-[#38415e] text-[12px] font-[600]">AI CÓ THỂ SỬA</p>
+                              <p className="uppercase text-[#38415e] text-[12px] font-[600]">
+                                AI CÓ THỂ SỬA
+                              </p>
                               <select
                                 className="w-[185px] h-[40px] text-[#43d0d0] border-2 rounded-sm px-[10px]"
                                 name=""
@@ -173,11 +184,15 @@ export default function Home() {
                                 <option>Chỉ tôi</option>
                                 <option>Mọi người</option>
                               </select>
-                              <p className="text-[#979fb7] font-[600] w-[80%]">Chỉ có bạn mới chỉnh sửa được học phần này</p>
+                              <p className="text-[#979fb7] font-[600] w-[80%]">
+                                Chỉ có bạn mới chỉnh sửa được học phần này
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center justify-center w-[100%] mt-[30px] mb-[30px]">
-                            <Button className="w-[80%] h-[70px] mr-[60px] bg-[#3ccfcf] text-white hover:bg-[#3ccfcf] text-[20px] font-[600]">Lưu</Button>
+                            <Button className="w-[80%] h-[70px] mr-[60px] bg-[#3ccfcf] text-white hover:bg-[#3ccfcf] text-[20px] font-[600]">
+                              Lưu
+                            </Button>
                           </div>
                         </div>
                       </AlertDialogDescription>
@@ -213,11 +228,158 @@ export default function Home() {
 
             <TooltipProvider>
               <Tooltip delayDuration={50}>
-                <TooltipTrigger asChild>
-                  <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
-                    <Keyboard />
-                  </div>
-                </TooltipTrigger>
+                <Popover>
+                  <PopoverTrigger>
+                    <TooltipTrigger asChild>
+                      <div className="text-[#65728f] cursor-pointer hover:bg-[#dddcdc] w-[40px] h-[40px] rounded-full bg-white border border-input flex items-center justify-center">
+                        <Keyboard />
+                      </div>
+                    </TooltipTrigger>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    side="top"
+                    align="end"
+                    className="w-[460px] h-[335px] p-0 "
+                  >
+                    <div className="w-[100%] h-[100%] flex flex-col items-center justify-center ">
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px] ">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">Thêm thẻ</p>
+                          <p className="text-[12px] text-[#939bb4]">
+                            (chèn dưới thẻ hiện tại)
+                          </p>
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Ctrl
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Shift
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            R
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px]">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">
+                            Mặt hoặc mở thẻ tiếp theo
+                          </p>
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[40px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Tab
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px]">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">
+                            Di chuyển thẻ lên/xuống
+                          </p>
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Alt
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4] flex items-center justify-center">
+                            <MoveUp className="w-[13px] h-[13px]" />
+                          </div>
+                          <div className="text-[12px]">/</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4] flex items-center justify-center">
+                            <MoveDown className="w-[13px] h-[13px]" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px]">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">Mở thư viện ảnh</p>
+                          <p className="text-[12px] text-[#939bb4]">
+                            (tab và enter để chọn ảnh)
+                          </p>
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Ctrl
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Shift
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            I
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px]">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">Tải ảnh lên</p>
+                          
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Ctrl
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Shift
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            U
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px]">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">Bật/tắt tự động đề xuất</p>
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Ctrl
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Shift
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            A
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center border-b-2 w-[100%] py-[10px]">
+                        <div className="flex flex-col justify-center items-center w-[50%]">
+                          <p className="text-[13px] font-[600]">Mở thu âm</p>
+                        </div>
+                        <div className="w-[50%] flex items-center justify-center gap-[5px]">
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Ctrl
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[70px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            Phím Shift
+                          </div>
+                          <div className="text-[12px]">+</div>
+                          <div className="w-[30px] h-[22px] border-[3px] border-[#939bb4] rounded-md text-[11px] text-center text-[#939bb4]">
+                            O
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 <TooltipContent
                   side="bottom"
                   align="end"
